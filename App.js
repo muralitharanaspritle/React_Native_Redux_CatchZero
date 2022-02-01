@@ -4,25 +4,28 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import GameLiveScreen from "./Screens/GameLiveScreen";
 import GameOverScreen from "./Screens/GameOverScreen";
-
+import { Provider } from "react-redux";
+import store from "./Redux/Store";
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
-    <>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name="Gamelive"
+    <> 
+    <Provider store={store} >
+      <NavigationContainer> 
+        <Stack.Navigator>  
+          <Stack.Screen 
+            name="Gamelive" 
             component={GameLiveScreen}
-            options={headerOptions1}
-          />
+            options={headerOptions1}  
+          />  
           <Stack.Screen
             name="GameOver"
             component={GameOverScreen}
-            options={headerOptions2}
+            options={headerOptions2} 
           />
         </Stack.Navigator>
       </NavigationContainer>
+      </Provider>
     </>
   );
 }
