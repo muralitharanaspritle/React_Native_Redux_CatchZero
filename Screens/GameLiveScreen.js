@@ -103,7 +103,7 @@ const GameLiveScreen = (props) => {
   return (
     <View style={GameStyles.container}>
       <Text style={[GameStyles.liveScore, { color: wrongClickedColor }]}>
-        Live Score:{props.score}
+        Live Score: {props.score}
       </Text>
 
       <TouchableOpacity
@@ -113,9 +113,11 @@ const GameLiveScreen = (props) => {
         }}
       >
         {isGameStarted ? (
-          <Text style={GameStyles.randomNumber}>{randomNumber}</Text>
+          <View>
+            <Text style={GameStyles.randomNumber}>{randomNumber}</Text>
+          </View>
         ) : (
-          <Text style={GameStyles.requestText}>Please start the game!</Text>
+          <Text style={GameStyles.requestText}>Please Start the Game !</Text>
         )}
       </TouchableOpacity>
       <View style={GameStyles.timerContainer}>

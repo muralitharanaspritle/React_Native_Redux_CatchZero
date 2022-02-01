@@ -9,13 +9,17 @@ const GameStyles = StyleSheet.create({
   },
   liveScore: {
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: percentageHeight(3),
     marginTop:percentageHeight(5),
     fontFamily: "sans-serif-medium",
   },
+  horizontalLine:{
+    borderBottomWidth:2
+  },
   requestText:{
     fontSize:percentageHeight(3),
-    fontWeight:"bold"
+    fontWeight:"bold",
+    color:'green'
   },
   randomNumberContainer: {
     display: "flex",
