@@ -1,4 +1,5 @@
 import {
+    RESETALL,
   SCORE_CLICK_NON_ZERO,
   SCORE_CLICK_ZERO,
   SCORE_SKIP_NON_ZERO,
@@ -28,3 +29,9 @@ export const scoreSkipNonZero = () => {
     type: SCORE_SKIP_NON_ZERO,
   };
 };
+
+export const resetAll=()=>{
+    return{
+        type:RESETALL
+    }
+}

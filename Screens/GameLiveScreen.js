@@ -6,10 +6,6 @@ import {
   HIGHEST_RANDOM_NUMBER,
   INTERVAL_BETWEEN_RANDOM_NUMBER_GENERATOR,
   LOWEST_RANDOM_NUMBER,
-  SCORE_FOR_CLICKING_NON_ZERO,
-  SCORE_FOR_CLICKING_ZERO,
-  SCORE_FOR_SKIPPING_NON_ZERO,
-  SCORE_FOR_SKIPPING_ZERO,
   TIME_GAP_BETWEEN_TWO_RANDOM_NUMBER,
   TOTAL_GAME_TIME,
 } from "../generalData/generalData";
@@ -22,13 +18,13 @@ import {
 import { connect } from "react-redux";
 
 const GameLiveScreen = (props) => {
-  console.log(props.score);
-  const [liveScore, setLiveScore] = useState(0);
   const [totalGameTime, setTotalGameTime] = useState(TOTAL_GAME_TIME);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [randomNumber, setRandomNumber] = useState("");
   const [gameTimerInterval, setGameTimerInterval] = useState(null);
   const [isClicked, setIsClicked] = useState(false);
+  const [wrongClickedColor, setWrongClickedColor] = useState("black");
+  const [lastTenSecondsColor, setLastTenSecondsColor] = useState("black");
   const navigation = useNavigation();
   let randomCreater = "";
 
@@ -38,19 +34,24 @@ const GameLiveScreen = (props) => {
     }
   }, [totalGameTime]);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setLastTenSecondsColor("black");
+      setRandomNumber("");
+    });
+    return unsubscribe;
+  });
+
   const scoreCalculation = () => {
-    console.log(randomNumber);
+    setWrongClickedColor("black");
     if (randomNumber === LOWEST_RANDOM_NUMBER && isClicked) {
-      //setLiveScore((prevState) => prevState + SCORE_FOR_CLICKING_ZERO);
       props.scoreClickZero();
     } else if (randomNumber === LOWEST_RANDOM_NUMBER && isClicked === false) {
-      //setLiveScore((prevState) => prevState + SCORE_FOR_SKIPPING_ZERO);
       props.scoreSkipZero();
     } else if (randomNumber > LOWEST_RANDOM_NUMBER && isClicked) {
-      //setLiveScore((prevState) => prevState + SCORE_FOR_CLICKING_NON_ZERO);
+      setWrongClickedColor("red");
       props.scoreClickNonZero();
     } else if (randomNumber > LOWEST_RANDOM_NUMBER && isClicked === false) {
-      //setLiveScore((prevState) => prevState + SCORE_FOR_SKIPPING_NON_ZERO);
       props.scoreSkipNonZero();
     } else {
       console.log("nothing");
@@ -59,11 +60,16 @@ const GameLiveScreen = (props) => {
   };
 
   const randomNumberGenerator = () => {
-    console.log(totalGameTime);
     if (totalGameTime === 0) {
       clearInterval(gameTimerInterval);
       //navigate to gameover
+      setIsGameStarted(false);
+      setTotalGameTime(TOTAL_GAME_TIME);
+
       navigation.navigate("GameOver");
+    }
+    if (totalGameTime < 10) {
+      setLastTenSecondsColor("red");
     }
     if (totalGameTime % INTERVAL_BETWEEN_RANDOM_NUMBER_GENERATOR === 0) {
       randomCreater = Math.floor(
@@ -96,20 +102,24 @@ const GameLiveScreen = (props) => {
 
   return (
     <View style={GameStyles.container}>
-      {/* <Text style={GameStyles.liveScore}>Live Score:{liveScore}</Text> */}
-      <Text style={GameStyles.liveScore}>Live Score:{props.score}</Text>
+      <Text style={[GameStyles.liveScore, { color: wrongClickedColor }]}>
+        Live Score:{props.score}
+      </Text>
 
       <TouchableOpacity
         style={GameStyles.randomNumberContainer}
         onPress={() => {
-          console.log("clicked");
           setIsClicked(true);
         }}
       >
-        <Text style={GameStyles.randomNumber}>{randomNumber}</Text>
+        {isGameStarted ? (
+          <Text style={GameStyles.randomNumber}>{randomNumber}</Text>
+        ) : (
+          <Text style={GameStyles.requestText}>Please start the game!</Text>
+        )}
       </TouchableOpacity>
       <View style={GameStyles.timerContainer}>
-        <Text style={GameStyles.timer}>
+        <Text style={[GameStyles.timer, { color: lastTenSecondsColor }]}>
           {Math.trunc(totalGameTime / 60)
             .toString()
             .padStart(2, 0)}{" "}

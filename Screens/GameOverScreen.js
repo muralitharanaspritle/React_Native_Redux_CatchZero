@@ -1,11 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import GameStyles from "../Components/GameStyles";
+import { resetAll } from "../Redux/Action";
+import { useNavigation } from "@react-navigation/native";
+useNavigation;
 const GameOverScreen = (props) => {
+  const navigation = useNavigation();
   useEffect(() => {
     console.log(props);
   }, []);
+
+  const resetAllData = () => {
+    props.resetAll();
+    navigation.navigate("Gamelive");
+  };
   return (
     <View style={GameStyles.container}>
       <Text style={GameStyles.gameOverText}>Game Over !!</Text>
@@ -24,6 +33,9 @@ const GameOverScreen = (props) => {
           Total zeros displayed {props.totalNumberOfZero}
         </Text>
       </View>
+      <TouchableOpacity onPress={() => resetAllData()}>
+        <Text style={GameStyles.startButton}>Restart</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -39,7 +51,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    resetAll: () => dispatch(resetAll()),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameOverScreen);

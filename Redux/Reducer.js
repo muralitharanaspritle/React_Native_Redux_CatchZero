@@ -5,6 +5,7 @@ import {
   SCORE_FOR_SKIPPING_ZERO,
 } from "../generalData/generalData";
 import {
+  RESETALL,
   SCORE_CLICK_NON_ZERO,
   SCORE_CLICK_ZERO,
   SCORE_SKIP_NON_ZERO,
@@ -51,9 +52,17 @@ const catchZeroReducer = (state = initialState, action) => {
         totalRandomNumbersGenerated: state.totalRandomNumbersGenerated + 1,
         totalNumberSkipped: state.totalNumberSkipped + 1,
       };
+    case RESETALL:
+      return {
+        score: 0,
+        totalNumberClicked: 0,
+        totalRandomNumbersGenerated: 0,
+        totalNumberSkipped: 0,
+        totalNumberOfZero: 0,
+      };
     default:
       return state;
   }
 };
 
-export default catchZeroReducer; 
+export default catchZeroReducer;

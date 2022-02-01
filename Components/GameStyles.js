@@ -10,18 +10,23 @@ const GameStyles = StyleSheet.create({
   liveScore: {
     fontWeight: "bold",
     fontSize: 20,
+    marginTop:percentageHeight(5),
     fontFamily: "sans-serif-medium",
+  },
+  requestText:{
+    fontSize:percentageHeight(3),
+    fontWeight:"bold"
   },
   randomNumberContainer: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     height: percentageHeight(30),
-    marginBottom: percentageHeight(10),
-    marginTop: percentageHeight(10),
+    marginBottom: percentageHeight(5),
+    marginTop: percentageHeight(5),
   },
   randomNumber: {
-    fontSize: percentageHeight(20),
+    fontSize: percentageHeight(25),
     fontWeight: "bold",
     fontFamily: "sans-serif-medium",
   },
@@ -37,14 +42,17 @@ const GameStyles = StyleSheet.create({
   timeFormat: {
     color: "blue",
     fontWeight: "bold",
-    fontSize: percentageHeight(4),
+    fontSize: percentageHeight(5),
     opacity: 0.4,
     fontFamily: "monospace",
   },
   startButton: {
+    position:"relative",
+    bottom:percentageHeight(1),
     padding: percentageHeight(1),
     textAlign: "center",
     borderWidth: 2,
+    borderRadius:percentageHeight(1),
     fontSize: percentageHeight(2.5),
     fontWeight: "bold",
     marginTop: percentageHeight(5),
@@ -54,6 +62,7 @@ const GameStyles = StyleSheet.create({
     padding: percentageHeight(1),
     textAlign: "center",
     borderWidth: 2,
+    borderRadius:percentageHeight(1),
     fontSize: percentageHeight(2.5),
     fontWeight: "bold",
     marginTop: percentageHeight(5),
