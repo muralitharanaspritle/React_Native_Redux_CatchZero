@@ -19,7 +19,8 @@ const GameStyles = StyleSheet.create({
   requestText:{
     fontSize:percentageHeight(3),
     fontWeight:"bold",
-    color:'green'
+    color:'green',
+    fontFamily: 'monospace'
   },
   randomNumberContainer: {
     display: "flex",

@@ -40,7 +40,7 @@ const GameLiveScreen = (props) => {
       setRandomNumber("");
     });
     return unsubscribe;
-  });
+  },[navigation]); 
 
   const scoreCalculation = () => {
     setWrongClickedColor("black");
@@ -105,6 +105,7 @@ const GameLiveScreen = (props) => {
       <Text style={[GameStyles.liveScore, { color: wrongClickedColor }]}>
         Live Score: {props.score}
       </Text>
+      <Text style={GameStyles.horizontalLine}></Text>
 
       <TouchableOpacity
         style={GameStyles.randomNumberContainer}
@@ -117,7 +118,7 @@ const GameLiveScreen = (props) => {
             <Text style={GameStyles.randomNumber}>{randomNumber}</Text>
           </View>
         ) : (
-          <Text style={GameStyles.requestText}>Please Start the Game !</Text>
+          <Text style={GameStyles.requestText}>Please Start The Game !</Text>
         )}
       </TouchableOpacity>
       <View style={GameStyles.timerContainer}>
